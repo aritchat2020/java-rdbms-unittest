@@ -55,4 +55,13 @@ public class MovieControllerGetAMovieTest {
                 .andExpect(jsonPath("$.releaseDate",equalTo("2016-04-06")));
     }
 
+    @Test
+    public void shouldReturn404WhenMovieIsNotPresentInDatabase() throws Exception {
+
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies/1").accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.error",equalTo("Movie with id 1, does not exists.")));
+    }
+
 }

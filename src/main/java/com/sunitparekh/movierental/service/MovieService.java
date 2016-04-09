@@ -1,5 +1,6 @@
 package com.sunitparekh.movierental.service;
 
+import com.sunitparekh.movierental.exceptions.ObjectNotFoundException;
 import com.sunitparekh.movierental.model.Movie;
 import com.sunitparekh.movierental.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class MovieService {
         return repository.findAllMovies();
     }
 
-    public Movie getMovie(Integer id) {
+    public Movie getMovie(Integer id) throws ObjectNotFoundException {
         return repository.getMovie(id);
     }
 }

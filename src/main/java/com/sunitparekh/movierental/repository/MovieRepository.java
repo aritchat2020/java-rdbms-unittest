@@ -1,6 +1,8 @@
 package com.sunitparekh.movierental.repository;
 
 
+import com.sun.javafx.binding.StringFormatter;
+import com.sunitparekh.movierental.exceptions.ObjectNotFoundException;
 import com.sunitparekh.movierental.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,8 +31,12 @@ public class MovieRepository {
     }
 
 
-    public Movie getMovie(Integer id) {
-        return jdbcTemplate.query("SELECT * FROM MOVIES WHERE MOVIE_ID = ?",new Object[]{ id },
-                (rs,index) -> buildMovie(rs)).get(0);
+    public Movie getMovie(Integer id) throws ObjectNotFoundException {
+        List<Movie> movies = jdbcTemplate.query("SELECT * FROM MOVIES WHERE MOVIE_ID = ?", new Object[]{id},
+                (rs, index) -> buildMovie(rs));
+        if (movies.size() == 1)
+                return movies.get(0);
+        else
+            throw new ObjectNotFoundException(StringFormatter.format("Movie with id %s, does not exists.",id).get());
     }
 }

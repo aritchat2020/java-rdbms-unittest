@@ -1,5 +1,6 @@
 package com.sunitparekh.movierental.controller;
 
+import com.sunitparekh.movierental.exceptions.ObjectNotFoundException;
 import com.sunitparekh.movierental.service.MovieService;
 import com.sunitparekh.movierental.view.MovieDetailView;
 import com.sunitparekh.movierental.view.MovieLiteView;
@@ -24,7 +25,7 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
-    public MovieDetailView getMovies(@PathVariable("id") Integer id) {
+    public MovieDetailView getMovies(@PathVariable("id") Integer id) throws ObjectNotFoundException {
         return new MovieDetailView(service.getMovie(id));
     }
 
