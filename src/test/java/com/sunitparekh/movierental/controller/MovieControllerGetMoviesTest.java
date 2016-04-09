@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class MovieControllerTest {
+public class MovieControllerGetMoviesTest {
 
     @Autowired
     public WebApplicationContext wac;
@@ -46,7 +46,7 @@ public class MovieControllerTest {
 
 
     @Test
-    public void findOneMovie() throws Exception {
+    public void shouldReturnOneMoviePresentInDatabase() throws Exception {
         movieCreator.createTheJungleBook();
 
         ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
@@ -55,11 +55,11 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.length()",equalTo(1)))
                 .andExpect(jsonPath("$[0].id",equalTo(1)))
                 .andExpect(jsonPath("$[0].name",equalTo("The Jungle Book")))
-                .andExpect(jsonPath("$[0].releaseDate",equalTo("2016-04-06")));
+                .andExpect(jsonPath("$[0].releaseYear",equalTo("2016")));
     }
 
     @Test
-    public void findThreeMovies() throws Exception {
+    public void shouldReturnAllThreeMoviePresentInDatabase() throws Exception {
         movieCreator.createTheJungleBook();
         movieCreator.createKungFuPanda3();
         movieCreator.createBatmanVsSupermanDawnofJustice();
@@ -68,6 +68,14 @@ public class MovieControllerTest {
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(3)));
+    }
+
+    @Test
+    public void shouldReturnEmptyArrayWhenNoMoviesPresetInTheDatabase() throws Exception {
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()",equalTo(0)));
     }
 
     @Test

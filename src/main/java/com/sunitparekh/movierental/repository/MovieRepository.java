@@ -27,4 +27,10 @@ public class MovieRepository {
         LocalDate releaseDate = rs.getDate("RELEASE_DATE").toLocalDate();
         return new Movie(id, name, releaseDate);
     }
+
+
+    public Movie getMovie(Integer id) {
+        return jdbcTemplate.query("SELECT * FROM MOVIES WHERE MOVIE_ID = ?",new Object[]{ id },
+                (rs,index) -> buildMovie(rs)).get(0);
+    }
 }
