@@ -50,7 +50,9 @@ public class MovieControllerTest {
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(1)))
-                .andExpect(jsonPath("$[0].name",equalTo("The Jungle Book")));
+                .andExpect(jsonPath("$[0].id",equalTo(1)))
+                .andExpect(jsonPath("$[0].name",equalTo("The Jungle Book")))
+                .andExpect(jsonPath("$[0].releaseDate",equalTo("2016-04-06")));
     }
 
     @Test
