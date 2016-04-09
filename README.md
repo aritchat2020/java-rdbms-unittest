@@ -13,6 +13,10 @@ However, now comes the next challenge, how the hell do I run Oracle or DB2 while
 
 In this example I use H2 database with FlywayDB to showcase how we can do unit testing with hitting database and run very quickly. This is just one sample and I encourage more pure unit tests for logic and other parts of the code. However, this approach can help you to test your repo layer (queries) and save you from mocking hell.
 
+### FlywayDB for database schema creation
+
+FlywayDB runs at the beginning of the test suite and create the database schema for you. In this example I am assuming that there is other way to create database for downstream environments. However, if possible please use FlywayDB in all environment including production and all database migrations will run at start of the application. Since it is idempotent running migration multiple time doesn't harm.
+
 ### View Objects to render response
 
 While building API, should avoid exposing the core entity and hence I prefer using wrapper view objects. Controller can decide which view to render and based on that it returns the value.
