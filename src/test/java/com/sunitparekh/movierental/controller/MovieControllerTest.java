@@ -1,5 +1,6 @@
 package com.sunitparekh.movierental.controller;
 
+import com.jayway.jsonpath.PathNotFoundException;
 import com.sunitparekh.movierental.Application;
 import com.sunitparekh.movierental.datafactory.MovieCreator;
 import org.junit.Before;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,4 +70,15 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.length()",equalTo(3)));
     }
 
+    @Test
+    public void shouldNotHaveNameFieldPresentInJsonResponseForMovieWithoutName() throws Exception {
+        movieCreator.createMovieWithoutName();
+
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()",equalTo(1)))
+                .andExpect(jsonPath("$[0].id",equalTo(1)))
+                .andExpect(jsonPath("$[0].name").doesNotExist());
+    }
 }
