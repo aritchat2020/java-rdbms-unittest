@@ -29,4 +29,4 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
-hsqldb-start.s
+hsqldb-start.sh
