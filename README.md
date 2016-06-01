@@ -31,6 +31,8 @@ Also provides example of how to handle exception such as resource not found usin
 1. I have not used JPA considering example for REST service and unit testing. Please use JPA if you need to.
 2. FlywayDB is used on for test database, however I would strongly recommend using it for all environments including Production.
 
+by Sunit Parekh
+
 
 
 
