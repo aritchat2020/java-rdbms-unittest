@@ -37,6 +37,6 @@ public class MovieRepository {
         if (movies.size() == 1)
                 return movies.get(0);
         else
-            throw new ObjectNotFoundException(StringFormatter.format("Movie with id %s, does not exists.",id).get());
+            throw new ObjectNotFoundException(StringFormatter.format("Movie with id %s, doesn't exists.",id).get());
     }
 }
