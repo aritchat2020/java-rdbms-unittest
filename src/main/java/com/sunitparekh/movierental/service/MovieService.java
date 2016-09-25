@@ -20,6 +20,8 @@ public class MovieService {
     }
 
     public Movie getMovie(Long id) throws ObjectNotFoundException {
-        return repository.findById(id);
+        Movie movie = repository.findOne(id);
+        if (movie == null) throw new ObjectNotFoundException("Movie with id " + id + ", does not exists.");
+        return movie;
     }
 }

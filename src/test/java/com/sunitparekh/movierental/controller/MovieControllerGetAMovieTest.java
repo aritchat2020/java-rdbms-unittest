@@ -58,7 +58,8 @@ public class MovieControllerGetAMovieTest {
 
         ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies/1").accept(MediaType.APPLICATION_JSON));
 
-        result.andExpect(status().is5xxServerError());
+        result.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.error",equalTo("Movie with id 1, does not exists.")));
     }
 
 }
