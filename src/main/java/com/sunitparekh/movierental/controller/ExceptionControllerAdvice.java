@@ -18,7 +18,7 @@ public class ExceptionControllerAdvice {
     @ResponseBody
     public Map<String, Object> exception(ObjectNotFoundException e) {
         return new HashMap() {{
-            put("errorMsg", e.getMessage());
+            put("error", e.getMessage());
         }};
     }
 }

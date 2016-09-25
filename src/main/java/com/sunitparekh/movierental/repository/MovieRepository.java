@@ -6,6 +6,7 @@ import com.sunitparekh.movierental.exceptions.ObjectNotFoundException;
 import com.sunitparekh.movierental.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -37,6 +38,6 @@ public class MovieRepository {
         if (movies.size() == 1)
                 return movies.get(0);
         else
-            throw new ObjectNotFoundException(StringFormatter.format("Movie with id %s, does n't exists.",id).get());
+            throw new ObjectNotFoundException(StringFormatter.format("Movie with id %s, does not exists.",id).get());
     }
 }
