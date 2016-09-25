@@ -44,7 +44,7 @@ public class MovieControllerGetAMovieTest {
     public void shouldReturnOneMoviePresentInDatabase() throws Exception {
         Integer id = (int)(long) movieCreator.createTheJungleBook();
 
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies/1").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies/1").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id",equalTo(id)))
@@ -56,7 +56,7 @@ public class MovieControllerGetAMovieTest {
     @Test
     public void shouldReturn404WhenMovieIsNotPresentInDatabase() throws Exception {
 
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies/1").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies/1").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.error",equalTo("Movie with id 1, does not exists.")));

@@ -19,12 +19,12 @@ public class MovieController {
     @Autowired
     public MovieService service;
 
-    @RequestMapping(value = "/findAllMovies", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies", method = RequestMethod.GET)
     public List<MovieLiteView> getMovies() {
         return service.findAllMovies().stream().map(MovieLiteView::new).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/findAllMovies/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies/{id}", method = RequestMethod.GET)
     public MovieDetailView getMovies(@PathVariable("id") Long id) throws ObjectNotFoundException {
         return new MovieDetailView(service.getMovie(id));
     }

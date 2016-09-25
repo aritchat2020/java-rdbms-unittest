@@ -43,7 +43,7 @@ public class MovieControllerGetMoviesTest {
     public void shouldReturnOneMoviePresentInDatabase() throws Exception {
         Integer id = (int)(long) movieCreator.createTheJungleBook();
 
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(1)))
@@ -58,7 +58,7 @@ public class MovieControllerGetMoviesTest {
         movieCreator.createKungFuPanda3();
         movieCreator.createBatmanVsSupermanDawnofJustice();
 
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(3)));
@@ -66,7 +66,7 @@ public class MovieControllerGetMoviesTest {
 
     @Test
     public void shouldReturnEmptyArrayWhenNoMoviesPresetInTheDatabase() throws Exception {
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(0)));
@@ -76,7 +76,7 @@ public class MovieControllerGetMoviesTest {
     public void shouldNotHaveNameFieldPresentInJsonResponseForMovieWithoutName() throws Exception {
         Integer id = (int)(long) movieCreator.createMovieWithoutName();
 
-        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/findAllMovies").accept(MediaType.APPLICATION_JSON));
+        ResultActions result = mvc.perform(MockMvcRequestBuilders.get("/movies").accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()",equalTo(1)))
