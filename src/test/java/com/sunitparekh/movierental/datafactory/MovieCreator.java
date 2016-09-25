@@ -1,48 +1,46 @@
 package com.sunitparekh.movierental.datafactory;
 
+import com.sunitparekh.movierental.model.Movie;
+import com.sunitparekh.movierental.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 @Component
 public class MovieCreator {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    MovieRepository repository;
 
-    public Integer createTheJungleBook(){
-        return createMovie(1,"The Jungle Book", LocalDate.of(2016,4,6));
+    public Long createTheJungleBook(){
+        return createMovie("The Jungle Book", LocalDate.of(2016,4,6));
     }
 
-    public Integer createKungFuPanda3(){
-        return createMovie(2,"Kung Fu Panda 3", LocalDate.of(2016,4,1));
+    public Long createKungFuPanda3(){
+        return createMovie("Kung Fu Panda 3", LocalDate.of(2016,4,1));
     }
 
-    public Integer createBatmanVsSupermanDawnofJustice(){
-        return createMovie(3,"Batman v Superman: Dawn of Justice", LocalDate.of(2016,3,25));
+    public Long createBatmanVsSupermanDawnofJustice(){
+        return createMovie("Batman v Superman: Dawn of Justice", LocalDate.of(2016,3,25));
     }
 
-    public Integer createStarWarsTheForceAwakens(){
-        return createMovie(4,"Star Wars: The Force Awakens", LocalDate.of(2015,12,25));
+    public Long createStarWarsTheForceAwakens(){
+        return createMovie("Star Wars: The Force Awakens", LocalDate.of(2015,12,25));
     }
 
-    public Integer createMovie(Integer id, String name, LocalDate releaseDate) {
-        Date date = Date.from(releaseDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        String sql = "INSERT INTO MOVIES(MOVIE_ID,MOVIE_NAME,RELEASE_DATE) values(?,?,?)";
-        return jdbcTemplate.update(sql,id,name,date);
+    public Long createMovie(String name, LocalDate releaseDate) {
+        Movie movie = new Movie(name, releaseDate);
+        repository.save(movie);
+        return  movie.getId();
     }
 
     public void cleanup() {
-        jdbcTemplate.update("DELETE FROM MOVIES");
+        repository.deleteAll();
     }
 
-    public Integer createMovieWithoutName() {
-        Date date = Date.from(LocalDate.of(2015,12,25).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        String sql = "INSERT INTO MOVIES(MOVIE_ID,RELEASE_DATE) values(?,?)";
-        return jdbcTemplate.update(sql,1,date);
+
+    public Long createMovieWithoutName() {
+        return createMovie(null,LocalDate.of(2015,12,25));
     }
 }

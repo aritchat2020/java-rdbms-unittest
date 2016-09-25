@@ -16,10 +16,10 @@ public class MovieService {
 
 
     public List<Movie> findAllMovies() {
-        return repository.findAllMovies();
+        return (List<Movie>) repository.findAll();
     }
 
-    public Movie getMovie(Integer id) throws ObjectNotFoundException {
-        return repository.getMovie(id);
+    public Movie getMovie(Long id) throws ObjectNotFoundException {
+        return repository.findById(id);
     }
 }
