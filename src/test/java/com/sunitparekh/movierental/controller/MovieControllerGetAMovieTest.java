@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,19 +24,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 public class MovieControllerGetAMovieTest {
-
-    @Autowired
-    public WebApplicationContext wac;
 
     @Autowired
     public MovieCreator movieCreator;
 
+    @Autowired
     private MockMvc mvc;
 
     @Before
     public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
         movieCreator.cleanup();
     }
 
